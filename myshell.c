@@ -32,9 +32,7 @@ int main(int argv, const char *argc[])
 
 		printf("Command entered is %s", fullName);
 
-		char* token = strtok(fullName, " ");
-
-		if (strcmp(token, "halt") == 0)
+		if (strcmp(fullName[0-3] + "\0", "halt") == 0)
 		{
 			finished = true;
 		}
