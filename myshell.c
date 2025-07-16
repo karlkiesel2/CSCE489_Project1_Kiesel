@@ -5,12 +5,13 @@
  *************************************************************************************/
 
 #include <stdio.h>
+#include <stdbool.h>
 #include "shellfuncts.h"
 
 int main(int argv, const char *argc[])
 {
-	//	(void) argv; // Make compile warnings go away - be sure to delete this line if you use the param
-	// (void)argc; // Make compile warnings go away - be sure to delete this line if you use the param
+	(void)argv; // Make compile warnings go away - be sure to delete this line if you use the param
+	(void)argc; // Make compile warnings go away - be sure to delete this line if you use the param
 
 	// If they just ran myshell, say Hello World--if they included a parameter, speak Australian
 	// if (argv == 1)
@@ -18,13 +19,26 @@ int main(int argv, const char *argc[])
 	// else
 	//	hello(0);
 
-	char fullName[30];
+	bool finished = false;
+	do
+	{
+		// create a string to hold the entered command
+		char fullName[100];
+		// Prompt user to enter their command
+		printf("Enter a command to run\n");
+		// Grab line of text from user
+		fgets(fullName, sizeof(fullName), stdin);
 
-	printf("Enter a command to run\n");
+		printf("Command entered is %s", fullName);
 
-	fgets(fullName, sizeof(fullName), stdin);
+		if (strcmp(fullName, "halt") == 0)
+		{
+			finished = true;
+		}
+		
 
-	printf("Command entered is %s", fullName);
-
+	} while (finished == false);
+	
 	return 0;
+
 }
