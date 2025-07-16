@@ -32,8 +32,9 @@ int main(int argv, const char *argc[])
 
 		printf("Command entered is %s", fullName);
 
-		if (strcmp(fullName[0-3] + "\0", "halt") == 0)
+		if (strncmp(fullName, "halt", 4) == 0)
 		{
+			printf("In loop");
 			finished = true;
 		}
 		
