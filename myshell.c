@@ -34,13 +34,34 @@ int main(int argv, const char *argc[])
 
 		if (strncmp(fullName, "halt", 4) == 0)
 		{
-			printf("In loop");
 			finished = true;
 		}
-		
+		else if (strncmp(fullName, "create", 6) == 0)
+		{
+			/* code */
+			printf("Create stuff\n");
+		}
+		else if (strncmp(fullName, "update", 6) == 0)
+		{
+			/* code */
+			printf("Update stuff\n");
+		}
+		else if (strncmp(fullName, "list", 4) == 0)
+		{
+			/* code */
+			printf("List stuff\n");
+		}
+		else if (strncmp(fullName, "dir", 3) == 0)
+		{
+			/* code */
+			printf("dir stuff\n");
+		}
+		else
+		{
+			printf("Try again\n");
+		}
 
 	} while (finished == false);
-	
-	return 0;
 
+	return 0;
 }
