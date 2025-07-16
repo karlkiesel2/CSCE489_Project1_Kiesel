@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 #include "shellfuncts.h"
 
 int main(int argv, const char *argc[])
@@ -31,7 +32,7 @@ int main(int argv, const char *argc[])
 
 		printf("Command entered is %s", fullName);
 
-		if (strcmp(fullName, "halt") == 0)
+		if (strcmp(fullName[0-3], "halt") == 0)
 		{
 			finished = true;
 		}
