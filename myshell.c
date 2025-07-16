@@ -9,7 +9,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <sys/types.h>
-#include <unistd.h> // Will cause an error on Windows machines, uncomment to run on Linux
+//#include <unistd.h> // Will cause an error on Windows machines, uncomment to run on Linux
 #include "shellfuncts.h"
 
 int main(int argv, const char *argc[])
@@ -58,10 +58,10 @@ int main(int argv, const char *argc[])
 		}
 		else if (strncmp(fullName, "dir", 3) == 0)
 		{
-			pid_t pid = fork();
+			//pid_t pid = fork();
 			printf("dir stuff\n");
-
-			if (pid == 0)
+			dir();
+			/* if (pid == 0)
 			{
 				// Child process
 				dir();
@@ -77,7 +77,7 @@ int main(int argv, const char *argc[])
 			{
 				// Error
 				perror("fork failed");
-			}
+			} */
 		}
 		else
 		{
