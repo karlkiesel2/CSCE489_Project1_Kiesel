@@ -25,7 +25,6 @@ int main(int argv, const char *argc[])
 	{
 		// create a string to hold the entered command
 		char fullName[100];
-		char halt[100] = "halt"; 
 		// Prompt user to enter their command
 		printf("Enter a command to run\n");
 		// Grab line of text from user
@@ -33,7 +32,9 @@ int main(int argv, const char *argc[])
 
 		printf("Command entered is %s", fullName);
 
-		if (strcmp(fullName, halt) == 0)
+		char* token = strtok(fullName, " ");
+
+		if (strcmp(token, "halt") == 0)
 		{
 			finished = true;
 		}
