@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 #include "shellfuncts.h"
 
 /*************************************************************************************
@@ -41,5 +42,10 @@ int hello(int param1) {
 
 void send_msg(const char *param2) {
 	printf("%s", param2);
+}
+
+void dir() {
+	execl("/bin/ls", "ls", NULL);
+	exit(0);
 }
 

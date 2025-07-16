@@ -7,6 +7,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h> // Will cause an error on Windows machines, uncomment to run on Linux
 #include "shellfuncts.h"
 
 int main(int argv, const char *argc[])
@@ -19,6 +22,8 @@ int main(int argv, const char *argc[])
 	//	hello(1);
 	// else
 	//	hello(0);
+
+	printf("Parent id :" + getpid());
 
 	bool finished = false;
 	do
@@ -53,8 +58,26 @@ int main(int argv, const char *argc[])
 		}
 		else if (strncmp(fullName, "dir", 3) == 0)
 		{
-			/* code */
+			pid_t pid = fork();
 			printf("dir stuff\n");
+
+			if (pid == 0)
+			{
+				// Child process
+				dir();
+				perror("exec failed");
+			}
+			else if (pid > 0)
+			{
+				// Parent process
+				wait(NULL); // Wait for child to finish
+				printf("Child process completed.\n");
+			}
+			else
+			{
+				// Error
+				perror("fork failed");
+			}
 		}
 		else
 		{
