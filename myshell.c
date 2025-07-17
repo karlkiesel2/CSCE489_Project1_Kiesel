@@ -23,7 +23,7 @@ int main(int argv, const char *argc[])
 	// else
 	//	hello(0);
 
-	printf("Parent id: %i", getpid());
+	printf("Parent id: %i\n", getpid());
 
 	bool finished = false;
 	do
@@ -59,8 +59,6 @@ int main(int argv, const char *argc[])
 		else if (strncmp(fullName, "dir", 3) == 0)
 		{
 			int pid = fork();
-			printf("dir stuff\n");
-			dir();
 			if (pid == 0)
 			{
 				// Child process
