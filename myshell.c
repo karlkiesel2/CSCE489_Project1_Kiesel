@@ -23,7 +23,7 @@ int main(int argv, const char *argc[])
 	// else
 	//	hello(0);
 
-	printf("Parent id :" + getpid());
+	printf("Parent id: %i", getpid());
 
 	bool finished = false;
 	do
