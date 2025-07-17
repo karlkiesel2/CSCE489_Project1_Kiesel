@@ -20,7 +20,8 @@
  *
  *************************************************************************************/
 
-int hello(int param1) {
+int hello(int param1)
+{
 	// I'm commenting to explain that this checks param and changes the message
 	if (param1 == 1)
 		send_msg("Hello world!\n");
@@ -40,14 +41,16 @@ int hello(int param1) {
  *
  *************************************************************************************/
 
-void send_msg(const char *param2) {
+void send_msg(const char *param2)
+{
 	printf("%s", param2);
 }
 
 /*
 Function called when the dir command is given by user
 */
-void dir() {
+void dir()
+{
 	// run the 'ls' command within the current directory
 	execl("/bin/ls", "ls", NULL);
 	exit(0);
@@ -56,24 +59,54 @@ void dir() {
 /*
 Function called to create a new file in the current directory
 
-Param: inputLine - Line of input given by user in format: create <name>
+Param: commandLine - Line of input given by user in format: create <name>
 */
-void create(char *inputLine) {
+void create(char *commandLine)
+{
 
-    FILE *newFile = fopen("someName", "r");
+	FILE *newFile = fopen("someName", "r");
 
-	// If newfile does not exist, it will return a NULL pointer
-    if (newFile) {
-        printf("File already exists!\n");
-        fclose(newFile);
-    } else {
-        printf("File does not exist.\n");
-		newFile = fopen("someName" , "w");
+	// If newFile does not exist, it will return a NULL pointer
+	if (newFile)
+	{
+		printf("File already exists!\n");
 		fclose(newFile);
-
-    }
+	}
+	else
+	{
+		printf("File does not exist.\n");
+		newFile = fopen("someName", "w");
+		fclose(newFile);
+	}
 
 	exit(0);
-
 }
 
+/*
+Function called to append text to the specified file in the current directory
+
+Param: commandLine - Line of input given by user in format: update <name> <number> <text>
+*/
+void update(char *commandLine)
+{
+
+	FILE *writeFile = fopen("someName", "a");
+
+	// If writeFile does not exist, it will return a NULL pointer
+	if (writeFile)
+	{
+		printf("File already exists!\n");
+		for (int i =0; i < 5; i++) {
+			 fprintf(writeFile, "This is a test\n");
+			 fflush(writeFile);
+		}
+		fclose(writeFile);
+	}
+	
+	else
+	{
+		printf("File does not exist.\n");
+		fclose(writeFile);
+	}
+	exit(0);
+}

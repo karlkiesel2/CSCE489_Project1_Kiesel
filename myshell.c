@@ -67,8 +67,26 @@ int main(int argv, const char *argc[])
 		}
 		else if (strncmp(commandLine, "update ", 7) == 0)
 		{
-			/* code */
-			printf("Update stuff\n");
+			// fork process
+			int pid = fork();
+			if (pid == 0)
+			{
+				// Child process
+				printf("Child process id: %i\n", getpid());
+				update(commandLine);
+				perror("exec failed");
+			}
+			else if (pid > 0)
+			{
+				// Parent process
+				wait(NULL); // Wait for child to finish
+				printf("Child process completed.\n");
+			}
+			else
+			{
+				// Error
+				perror("fork failed");
+			}
 		}
 		else if (strncmp(commandLine, "list ", 5) == 0)
 		{
