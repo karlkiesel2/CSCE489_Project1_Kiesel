@@ -9,7 +9,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <sys/types.h>
-//#include <unistd.h> // Will cause an error on Windows machines, uncomment to run on Linux
+// #include <unistd.h> // Will cause an error on Windows machines, uncomment to run on Linux
 #include "shellfuncts.h"
 
 int main(int argv, const char *argc[])
@@ -22,45 +22,67 @@ int main(int argv, const char *argc[])
 	//	hello(1);
 	// else
 	//	hello(0);
-
-	printf("Parent id: %i\n", getpid());
-
 	bool finished = false;
+	// iterate through do-while loop until the 'halt' command is entered
 	do
 	{
+		// print parent process id at the start of loop
+		printf("Parent process id: %i\n", getpid());
 		// create a string to hold the entered command
-		char fullName[100];
+		char commandLine[100];
 		// Prompt user to enter their command
 		printf("Enter a command to run\n");
 		// Grab line of text from user
-		fgets(fullName, sizeof(fullName), stdin);
+		fgets(commandLine, sizeof(commandLine), stdin);
 
-		printf("Command entered is %s", fullName);
+		printf("Command entered is %s", commandLine);
 
-		if (strcmp(fullName, "halt\n") == 0)
+		if (strcmp(commandLine, "halt\n") == 0)
 		{
 			finished = true;
 		}
-		else if (strncmp(fullName, "create ", 7) == 0)
+		else if (strncmp(commandLine, "create ", 7) == 0)
 		{
-			/* code */
-			printf("Create stuff\n");
-		}
-		else if (strncmp(fullName, "update ", 7) == 0)
-		{
-			/* code */
-			printf("Update stuff\n");
-		}
-		else if (strncmp(fullName, "list ", 5) == 0)
-		{
-			printf("List stuff\n");
-		}
-		else if (strcmp(fullName, "dir\n") == 0)
-		{
+
+			// fork process
 			int pid = fork();
 			if (pid == 0)
 			{
 				// Child process
+				printf("Child process id: %i\n", getpid());
+				create(commandLine);
+				perror("exec failed");
+			}
+			else if (pid > 0)
+			{
+				// Parent process
+				wait(NULL); // Wait for child to finish
+				printf("Child process completed.\n");
+			}
+			else
+			{
+				// Error
+				perror("fork failed");
+			}
+		}
+		else if (strncmp(commandLine, "update ", 7) == 0)
+		{
+			/* code */
+			printf("Update stuff\n");
+		}
+		else if (strncmp(commandLine, "list ", 5) == 0)
+		{
+			printf("List stuff\n");
+		}
+		// condition for 'dir' command
+		else if (strcmp(commandLine, "dir\n") == 0)
+		{
+			// fork process
+			int pid = fork();
+			if (pid == 0)
+			{
+				// Child process
+				printf("Child process id: %i\n", getpid());
 				dir();
 				perror("exec failed");
 			}

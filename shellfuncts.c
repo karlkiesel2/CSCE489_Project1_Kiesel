@@ -44,8 +44,36 @@ void send_msg(const char *param2) {
 	printf("%s", param2);
 }
 
+/*
+Function called when the dir command is given by user
+*/
 void dir() {
+	// run the 'ls' command within the current directory
 	execl("/bin/ls", "ls", NULL);
 	exit(0);
+}
+
+/*
+Function called to create a new file in the current directory
+
+Param: inputLine - Line of input given by user in format: create <name>
+*/
+void create(char *inputLine) {
+
+    FILE *newFile = fopen("someName", "r");
+
+	// If newfile does not exist, it will return a NULL pointer
+    if (newFile) {
+        printf("File already exists!\n");
+        fclose(newFile);
+    } else {
+        printf("File does not exist.\n");
+		newFile = fopen("someName" , "w");
+		fclose(newFile);
+
+    }
+
+	exit(0);
+
 }
 
