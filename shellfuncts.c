@@ -46,6 +46,6 @@ void send_msg(const char *param2) {
 
 void dir() {
 	execl("/bin/ls", "ls", NULL);
-	//exit(0);
+	exit(0);
 }
 

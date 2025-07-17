@@ -37,26 +37,25 @@ int main(int argv, const char *argc[])
 
 		printf("Command entered is %s", fullName);
 
-		if (strncmp(fullName, "halt", 4) == 0)
+		if (strcmp(fullName, "halt\n") == 0)
 		{
 			finished = true;
 		}
-		else if (strncmp(fullName, "create", 6) == 0)
+		else if (strncmp(fullName, "create ", 7) == 0)
 		{
 			/* code */
 			printf("Create stuff\n");
 		}
-		else if (strncmp(fullName, "update", 6) == 0)
+		else if (strncmp(fullName, "update ", 7) == 0)
 		{
 			/* code */
 			printf("Update stuff\n");
 		}
-		else if (strncmp(fullName, "list", 4) == 0)
+		else if (strncmp(fullName, "list ", 5) == 0)
 		{
-			/* code */
 			printf("List stuff\n");
 		}
-		else if (strncmp(fullName, "dir", 3) == 0)
+		else if (strcmp(fullName, "dir\n") == 0)
 		{
 			int pid = fork();
 			if (pid == 0)
