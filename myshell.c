@@ -58,10 +58,10 @@ int main(int argv, const char *argc[])
 		}
 		else if (strncmp(fullName, "dir", 3) == 0)
 		{
-			//pid_t pid = fork();
+			int pid = fork();
 			printf("dir stuff\n");
 			dir();
-			/* if (pid == 0)
+			if (pid == 0)
 			{
 				// Child process
 				dir();
@@ -77,7 +77,7 @@ int main(int argv, const char *argc[])
 			{
 				// Error
 				perror("fork failed");
-			} */
+			}
 		}
 		else
 		{
