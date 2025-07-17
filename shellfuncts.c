@@ -90,23 +90,38 @@ Param: commandLine - Line of input given by user in format: update <name> <numbe
 void update(char *commandLine)
 {
 
+	FILE *testFile = fopen("someName", "r");
+	// If newFile does not exist, it will return a NULL pointer
+	if (testFile)
+	{
+		printf("File already exists!\n");
+		fclose(testFile);
+	}
+	else
+	{
+		printf("File does not exist, use 'create' command to make it.\n");
+		fclose(testFile);
+		exit(0);
+	}
+
 	FILE *writeFile = fopen("someName", "a");
 
 	// If writeFile does not exist, it will return a NULL pointer
-	if (writeFile)
+	// if (writeFile)
+	//{
+	// printf("File already exists!\n");
+	for (int i = 0; i < 5; i++)
 	{
-		printf("File already exists!\n");
-		for (int i =0; i < 5; i++) {
-			 fprintf(writeFile, "This is a test\n");
-			 fflush(writeFile);
-		}
-		fclose(writeFile);
+		fprintf(writeFile, "This is a test\n");
+		fflush(writeFile);
 	}
-	
-	else
-	{
-		printf("File does not exist.\n");
-		fclose(writeFile);
-	}
+	fclose(writeFile);
+	//}
+
+	// else
+	//{
+	//	printf("File does not exist.\n");
+	//	fclose(writeFile);
+	// }
 	exit(0);
 }
