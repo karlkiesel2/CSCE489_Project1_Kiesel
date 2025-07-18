@@ -35,8 +35,14 @@ int main(int argv, const char *argc[])
 		commandLine[strcspn(commandLine, "\n")] = 0;
 
 		// These lines are used to check if the last two characters of a line are " &", indicating that the child process should run in the background
+		bool background = false;
 		char lastChar = commandLine[strlen(commandLine) - 1];
 		char secondLastChar = commandLine[strlen(commandLine) - 2];
+		if ((lastChar == '&') && (secondLastChar == ' '))
+		{
+			background = true;
+		}
+		
 
 		// show user the command that they entered
 		printf("Command entered is: %s\n", commandLine);
@@ -106,7 +112,7 @@ int main(int argv, const char *argc[])
 				perror("exec failed");
 			}
 			// This handles the background process case for parent
-			else if ((pid > 0) && (lastChar == '&') && (secondLastChar == ' '))
+			else if ((pid > 0) && (background == true))
 			{
 				printf("In the background!\n");
 				wait(NULL); // Wait for child to finish
@@ -149,8 +155,8 @@ int main(int argv, const char *argc[])
 				perror("fork failed");
 			}
 		}
-		// check if value in command line is exactly "dir" or "dir &"
-		else if ((strcmp(commandLine, "dir") == 0) || (strcmp(commandLine, "dir &") == 0))
+		// check if value in command line is "dir" or "dir &"
+		else if ((strcmp(commandLine, "dir") == 0) || ((strncmp(commandLine, "dir ", 4) == 0) && (background = true)))
 		{
 			// fork process
 			int pid = fork();
