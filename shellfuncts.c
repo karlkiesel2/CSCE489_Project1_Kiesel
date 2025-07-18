@@ -125,7 +125,7 @@ void update(char *commandLine)
 	}
 	// close file
 	fclose(writeFile);
-	printf("\"%s\" written %s times\n", textToken, token);
+	printf("\"%s\" written %s times\n. Process id:%s", textToken, token, getpid());
 	exit(0);
 }
 
