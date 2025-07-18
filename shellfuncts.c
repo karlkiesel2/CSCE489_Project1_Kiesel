@@ -114,12 +114,12 @@ void update(char *commandLine)
 	// since we know the file exists, open it in append mode
 	FILE *writeFile = fopen(token, "a");
 	token = strtok(NULL, " ");
-	char *endptr;
+	//char *endptr;
 
-	char *textToken = strtok(commandLine, "\"");
+	char *textToken = strtok(token, "\"");
 	//textToken = strtok(NULL, "\"");
 
-	for (int i = 0; i < strtol(token, endptr, 10); i++)
+	for (int i = 0; i < strtol(token, NULL, 10); i++)
 	{
 		// write <text> to file each <number> of iterations
 		fprintf(writeFile, "%s\n", textToken);
