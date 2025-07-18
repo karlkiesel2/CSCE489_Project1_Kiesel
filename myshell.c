@@ -23,18 +23,22 @@ int main(int argv, const char *argc[])
 	// else
 	//	hello(0);
 	bool finished = false;
+	// create a string to hold the entered command
+	char commandLine[100];
 	// iterate through do-while loop until the 'halt' command is entered
 	do
 	{
 		// print parent process id at the start of loop
 		printf("Parent process id: %i\n", getpid());
-		// create a string to hold the entered command
-		char commandLine[100];
 		// Prompt user to enter their command
 		printf("Enter a command to run:\n");
 		// Grab line of text from user
 		fgets(commandLine, sizeof(commandLine), stdin);
 		commandLine[strcspn(commandLine, "\n")] = 0;
+
+		// These lines are used to check if the last two characters of a line are " &", indicating that the child process should run in the background
+		char lastChar = commandLine[strlen(commandLine) - 1];
+		char secondLastChar = commandLine[strlen(commandLine) - 1];
 
 		printf("Command entered is: %s\n", commandLine);
 
@@ -77,11 +81,19 @@ int main(int argv, const char *argc[])
 				update(commandLine);
 				perror("exec failed");
 			}
+			// This handles the background process case
+			else if ((pid > 0) && (lastChar == '&') && (secondLastChar == ' '))
+			{
+				printf("In the background!");
+				wait(NULL); // Wait for child to finish
+				printf("Child process completed.\n\n");
+				// background stuff
+			}
 			else if (pid > 0)
 			{
 				// Parent process
-				//wait(NULL); // Wait for child to finish
-				//printf("Child process completed.\n\n");
+				wait(NULL); // Wait for child to finish
+				printf("Child process completed.\n\n");
 			}
 			else
 			{
