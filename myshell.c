@@ -34,10 +34,11 @@ int main(int argv, const char *argc[])
 		printf("Enter a command to run:\n");
 		// Grab line of text from user
 		fgets(commandLine, sizeof(commandLine), stdin);
+		commandLine[strcspn(commandLine, "\n")] = 0;
 
 		printf("Command entered is: %s\n", commandLine);
 
-		if (strcmp(commandLine, "halt\n") == 0)
+		if (strcmp(commandLine, "halt") == 0)
 		{
 			finished = true;
 		}
@@ -111,7 +112,7 @@ int main(int argv, const char *argc[])
 			}
 		}
 		// condition for 'dir' command
-		else if (strcmp(commandLine, "dir\n") == 0)
+		else if (strcmp(commandLine, "dir") == 0)
 		{
 			// fork process
 			int pid = fork();
