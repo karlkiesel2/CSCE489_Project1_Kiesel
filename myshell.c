@@ -31,11 +31,11 @@ int main(int argv, const char *argc[])
 		// create a string to hold the entered command
 		char commandLine[100];
 		// Prompt user to enter their command
-		printf("Enter a command to run\n");
+		printf("Enter a command to run:\n");
 		// Grab line of text from user
 		fgets(commandLine, sizeof(commandLine), stdin);
 
-		printf("Command entered is %s", commandLine);
+		printf("Command entered is %s\n", commandLine);
 
 		if (strcmp(commandLine, "halt\n") == 0)
 		{
@@ -57,7 +57,7 @@ int main(int argv, const char *argc[])
 			{
 				// Parent process
 				wait(NULL); // Wait for child to finish
-				printf("Child process completed.\n");
+				printf("Child process completed.\n\n");
 			}
 			else
 			{
@@ -80,7 +80,7 @@ int main(int argv, const char *argc[])
 			{
 				// Parent process
 				wait(NULL); // Wait for child to finish
-				printf("Child process completed.\n");
+				printf("Child process completed.\n\n");
 			}
 			else
 			{
@@ -90,7 +90,25 @@ int main(int argv, const char *argc[])
 		}
 		else if (strncmp(commandLine, "list ", 5) == 0)
 		{
-			printf("List stuff\n");
+			int pid = fork();
+			if (pid == 0)
+			{
+				// Child process
+				printf("Child process id: %i\n", getpid());
+				list(commandLine);
+				perror("exec failed");
+			}
+			else if (pid > 0)
+			{
+				// Parent process
+				wait(NULL); // Wait for child to finish
+				printf("Child process completed.\n\n");
+			}
+			else
+			{
+				// Error
+				perror("fork failed");
+			}
 		}
 		// condition for 'dir' command
 		else if (strcmp(commandLine, "dir\n") == 0)
@@ -108,7 +126,7 @@ int main(int argv, const char *argc[])
 			{
 				// Parent process
 				wait(NULL); // Wait for child to finish
-				printf("Child process completed.\n");
+				printf("Child process completed.\n\n");
 			}
 			else
 			{

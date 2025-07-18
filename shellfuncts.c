@@ -90,38 +90,61 @@ Param: commandLine - Line of input given by user in format: update <name> <numbe
 void update(char *commandLine)
 {
 
+	// First, check if the specified file exists
 	FILE *testFile = fopen("someName", "r");
-	// If newFile does not exist, it will return a NULL pointer
 	if (testFile)
 	{
-		printf("File already exists!\n");
+		// if file exists, close it and move on
 		fclose(testFile);
 	}
 	else
 	{
+		// if file does not exist, stop process and return to parent
 		printf("File does not exist, use 'create' command to make it.\n");
 		fclose(testFile);
 		exit(0);
 	}
 
+	// since we know the file exists, open it in append mode
 	FILE *writeFile = fopen("someName", "a");
-
-	// If writeFile does not exist, it will return a NULL pointer
-	// if (writeFile)
-	//{
-	// printf("File already exists!\n");
 	for (int i = 0; i < 5; i++)
 	{
+		// write <text> to file each <number> of iterations
 		fprintf(writeFile, "This is a test\n");
+		// update changes immediately
 		fflush(writeFile);
 	}
+	// close file
 	fclose(writeFile);
-	//}
 
-	// else
-	//{
-	//	printf("File does not exist.\n");
-	//	fclose(writeFile);
-	// }
 	exit(0);
+}
+
+/*
+Function called to read contents of file in the current directory
+
+Param: commandLine - Line of input given by user in format: update <name> <number> <text>
+*/
+void list(char *commandLine) {
+
+	FILE *readFile = fopen("someName", "r");
+
+	// If newFile does not exist, it will return a NULL pointer
+	if (readFile)
+	{
+		// if file exists, close it and move on
+		fclose(readFile);
+		// run the UNIX cat command to read contents of file
+		execl("/bin/cat", "someName", NULL);
+	}
+	else
+	{
+		// if file does not exist, stop process and return to parent
+		printf("File does not exist, use 'create' command to make it.\n");
+		fclose(readFile);
+		exit(0);
+	}
+
+	exit(0);
+
 }
