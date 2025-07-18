@@ -9,7 +9,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <sys/types.h>
-//#include <sys/waitpid.h> // Will cause an error on Windows machines, uncomment to run on Linux
+#include <sys/wait.h> // Will cause an error on Windows machines, uncomment to run on Linux
 #include <unistd.h> // Will cause an error on Windows machines, uncomment to run on Linux
 #include "shellfuncts.h"
 
@@ -85,7 +85,7 @@ int main(int argv, const char *argc[])
 				// Child process
 				printf("Child process id: %i\n", getpid());
 				create(commandLine);
-				perror("exec failed");
+				printf("exec failed");
 			}
 			// This handles the background process case for parent
 			else if ((pid > 0) && (background == true))
@@ -102,7 +102,7 @@ int main(int argv, const char *argc[])
 			else
 			{
 				// Error
-				perror("fork failed");
+				printf("fork failed");
 			}
 		}
 		// check if first 7 chars of user input are "update " and the fourth parameter is a non-NULL value
@@ -115,7 +115,7 @@ int main(int argv, const char *argc[])
 				// Child process
 				printf("Child process id: %i\n", getpid());
 				update(commandLine);
-				perror("exec failed");
+				printf("exec failed");
 			}
 			// This handles the background process case for parent
 			else if ((pid > 0) && (background == true))
@@ -133,7 +133,7 @@ int main(int argv, const char *argc[])
 			else
 			{
 				// Error
-				perror("fork failed");
+				printf("fork failed");
 			}
 		}
 		// check if first 5 chars of user input are "list "
@@ -145,7 +145,7 @@ int main(int argv, const char *argc[])
 				// Child process
 				printf("Child process id: %i\n", getpid());
 				list(commandLine);
-				perror("exec failed");
+				printf("exec failed");
 			}
 			// This handles the background process case for parent
 			else if ((pid > 0) && (background == true))
@@ -162,7 +162,7 @@ int main(int argv, const char *argc[])
 			else
 			{
 				// Error
-				perror("fork failed");
+				printf("fork failed");
 			}
 		}
 		// check if value in command line is "dir" or "dir &"
@@ -175,7 +175,7 @@ int main(int argv, const char *argc[])
 				// Child process
 				printf("Child process id: %i\n", getpid());
 				dir();
-				perror("exec failed");
+				printf("exec failed");
 			}
 			// This handles the background process case for parent
 			else if ((pid > 0) && (background == true))
@@ -192,7 +192,7 @@ int main(int argv, const char *argc[])
 			else
 			{
 				// Error
-				perror("fork failed");
+				printf("fork failed");
 			}
 		}
 		// None of the command requirements were met
