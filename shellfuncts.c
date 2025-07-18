@@ -94,6 +94,7 @@ Param: commandLine - Line of input given by user in format: update <name> <numbe
 void update(char *commandLine)
 {
 
+	// copy contents from user input into new string, since we will be splitting it off of two different delimiters
 	char lineCopy[100];
 	strcpy(lineCopy, commandLine);
 
@@ -129,10 +130,11 @@ void update(char *commandLine)
 		fprintf(writeFile, "%s\n", textToken);
 		// update changes immediately
 		fflush(writeFile);
+		sleep(strlen(textToken) / 5);
 	}
 	// close file
 	fclose(writeFile);
-
+	printf("\"%s\" written %s times\n", textToken, token);
 	exit(0);
 }
 
