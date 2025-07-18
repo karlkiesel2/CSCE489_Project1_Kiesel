@@ -8,48 +8,14 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include <unistd.h> // Will cause an error on Windows machines, uncomment to run on Linux
 #include "shellfuncts.h"
 
-/*************************************************************************************
- * hello - sends hello world to the user! I'm doing proper function commenting so future
- *         coders might not find my code as painful.
- *
- *		Params:	param1 - I explain my parameters, like this is 1 for American, 2 for
- *                      Australian
- *
- *		Returns: always returns 1, no matter what. Fairly useless.
- *
- *************************************************************************************/
-
-int hello(int param1)
-{
-	// I'm commenting to explain that this checks param and changes the message
-	if (param1 == 1)
-		send_msg("Hello world!\n");
-	else
-		send_msg("G'day world!\n");
-
-	// Return 1 because, why not.
-	return 1;
-}
-
-/*************************************************************************************
- * hello - sends hello world to the user! I'm doing proper function commenting so future
- *         coders might not find my code as painful.
- *
- *    Params:  param2 - not a very good parameter name - something better might be
- *                      say, msgstr or sendtext
- *
- *************************************************************************************/
-
-void send_msg(const char *param2)
-{
-	printf("%s", param2);
-}
-
 /*
-Function called when the dir command is given by user
+* Function called when the dir command is given by user
+* 
+* No params
 */
 void dir()
 {
@@ -59,13 +25,14 @@ void dir()
 }
 
 /*
-Function called to create a new file in the current directory
-
-Param: commandLine - Line of input given by user in format: create <name>
+* Function called to create a new file in the current directory
+*
+* Param: commandLine - Line of input given by user in format: create <name>
 */
 void create(char *commandLine)
 {
 
+	// grab the second param of the user input, which will be used as the file name
 	char *token = strtok(commandLine, " ");
 	token = strtok(NULL, " ");
 
@@ -79,18 +46,20 @@ void create(char *commandLine)
 	}
 	else
 	{
-		printf("New file created successfully!\n");
+		// the 'w' argument will create the new file
 		newFile = fopen(token, "w");
 		fclose(newFile);
+		printf("New file created successfully!\n");
+
 	}
 
 	exit(0);
 }
 
 /*
-Function called to append text to the specified file in the current directory
-
-Param: commandLine - Line of input given by user in format: update <name> <number> <text>
+* Function called to append text to the specified file in the current directory
+*
+* Param: commandLine - Line of input given by user in format: update <name> <number> <text>
 */
 void update(char *commandLine)
 {
@@ -99,8 +68,8 @@ void update(char *commandLine)
 	char lineCopy[100];
 	strcpy(lineCopy, commandLine);
 
+	// grab the second parameter, which will be the file name
 	char *token = strtok(commandLine, " ");
-
 	token = strtok(NULL, " ");
 
 	// First, check if the specified file exists
@@ -120,8 +89,28 @@ void update(char *commandLine)
 
 	// since we know the file exists, open it in append mode
 	FILE *writeFile = fopen(token, "a");
+	// grab the next token, which is the number of times to print
 	token = strtok(NULL, " ");
 
+	// make sure each char in <number> is a numeric , and non-negative
+	if (token[i] == '-')
+	{
+		printf("Number cannot be negative. Please try again");
+		exit(0);
+	}
+	
+	for (int i = 0; i < strlen(token); i++)
+	{
+		if (!isdigit(token[i]))
+		{
+			printf("Non-numeric entry detected for <number>. Please try again");
+			exit(0);
+		}
+		
+	}
+	
+
+	// using the copy of the commandLine string, grab everything inside "".
 	char *textToken = strtok(lineCopy, "\"");
 	textToken = strtok(NULL, "\"");
 
@@ -131,6 +120,7 @@ void update(char *commandLine)
 		fprintf(writeFile, "%s\n", textToken);
 		// update changes immediately
 		fflush(writeFile);
+		// sleep as specified in the Project1 description
 		sleep(strlen(textToken) / 5);
 	}
 	// close file
@@ -140,15 +130,17 @@ void update(char *commandLine)
 }
 
 /*
-Function called to read contents of file in the current directory
-
-Param: commandLine - Line of input given by user in format: update <name> <number> <text>
+* Function called to read contents of file in the current directory
+* 
+* Param: commandLine - Line of input given by user in format: update <name> <number> <text>
 */
 void list(char *commandLine) {
 
+	// grab the second param, which is file name
 	char *token = strtok(commandLine, " ");
 	token = strtok(NULL, " ");
 
+	// open file in read mode
 	FILE *readFile = fopen(token, "r");
 
 	// If newFile does not exist, it will return a NULL pointer

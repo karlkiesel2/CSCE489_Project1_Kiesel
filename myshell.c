@@ -12,7 +12,9 @@
 #include <sys/wait.h> // Will cause an error on Windows machines, uncomment to run on Linux
 #include <unistd.h> // Will cause an error on Windows machines, uncomment to run on Linux
 #include "shellfuncts.h"
-
+/*
+Implementation of myshell for Project 1
+*/
 int main(int argv, const char *argc[])
 {
 	(void)argv; // Make compile warnings go away - be sure to delete this line if you use the param
@@ -20,7 +22,7 @@ int main(int argv, const char *argc[])
 
 	// used to check if the shell should be terminated. Start as false
 	bool finished = false;
-	// create a string to hold the entered command
+	// create a string to hold the entered command, and copies for tokenizing
 	char commandLine[100], checkForTwoParams[100], checkForFourParams[100], checkForThreeParams[100];
 	// iterate through do-while loop until the 'halt' command is entered
 	do
@@ -29,7 +31,7 @@ int main(int argv, const char *argc[])
 		printf("Parent process id: %i\n", getpid());
 		// Prompt user to enter their command
 		printf("Enter a command to run:\n");
-		// Grab line of text from user
+		// Grab line of text from user, contaning 1 or more parameters. 1st parameter is the name of the command to be executed
 		fgets(commandLine, sizeof(commandLine), stdin);
 		// remove the trailing newline character
 		commandLine[strcspn(commandLine, "\n")] = 0;
@@ -74,7 +76,7 @@ int main(int argv, const char *argc[])
 		{
 			finished = true;
 		}
-		// check if first 7 chars of user input are "create "
+		// check if first 7 chars of user input are "create ". Also make sure at least two params are given. Lastly, check for background mode
 		else if ((strncmp(commandLine, "create ", 7) == 0) && (checkForTwoParamsToken != NULL) && ((checkForThreeParamsToken == NULL) || (background == true)))
 		{
 
@@ -85,11 +87,12 @@ int main(int argv, const char *argc[])
 				// Child process
 				printf("Child process id: %i\n", getpid());
 				create(commandLine);
-				printf("exec failed");
+				printf("exec failed\n");
 			}
 			// This handles the background process case for parent
 			else if ((pid > 0) && (background == true))
 			{
+				// do not wait for the child process to finish
 				printf("Child process working in background.\n\n");
 				
 			}
@@ -102,10 +105,10 @@ int main(int argv, const char *argc[])
 			else
 			{
 				// Error
-				printf("fork failed");
+				printf("fork failed\n");
 			}
 		}
-		// check if first 7 chars of user input are "update " and the fourth parameter is a non-NULL value
+		// check if first 7 chars of user input are "update " and the fourth parameter is a non-NULL value that starts with quotation marks
 		else if ((strncmp(commandLine, "update ", 7) == 0) && ((checkForFourParamsToken != NULL)) && (checkForFourParamsToken[0] == '"'))
 		{
 			// fork process
@@ -136,7 +139,7 @@ int main(int argv, const char *argc[])
 				printf("fork failed");
 			}
 		}
-		// check if first 5 chars of user input are "list "
+		// check if first 5 chars of user input are "list ". Also make sure at least two params are given. Lastly, check for background mode
 		else if ((strncmp(commandLine, "list ", 5) == 0) && (checkForTwoParamsToken != NULL) && ((checkForThreeParamsToken == NULL) || (background == true)))
 		{
 			int pid = fork();
@@ -165,8 +168,8 @@ int main(int argv, const char *argc[])
 				printf("fork failed");
 			}
 		}
-		// check if value in command line is "dir" or "dir &"
-		else if ((strcmp(commandLine, "dir") == 0) || ((strncmp(commandLine, "dir ", 4) == 0) && (background == true) && (checkForThreeParamsToken == NULL)))
+		// check if value in command line is "dir" or "dir &". Also make sure there is never a third parameter given
+		else if (((strcmp(commandLine, "dir") == 0) || ((strncmp(commandLine, "dir ", 4) == 0) && (background == true))) && (checkForThreeParamsToken == NULL))
 		{
 			// fork process
 			int pid = fork();
