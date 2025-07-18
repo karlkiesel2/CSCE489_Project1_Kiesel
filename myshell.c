@@ -9,7 +9,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <sys/types.h>
-#include <sys/waitpid.h> // Will cause an error on Windows machines, uncomment to run on Linux
+//#include <sys/waitpid.h> // Will cause an error on Windows machines, uncomment to run on Linux
 #include <unistd.h> // Will cause an error on Windows machines, uncomment to run on Linux
 #include "shellfuncts.h"
 
