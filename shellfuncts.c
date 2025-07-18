@@ -128,7 +128,9 @@ Param: commandLine - Line of input given by user in format: update <name> <numbe
 void list(char *commandLine) {
 
 	char *token = strtok(commandLine, " ");
+	printf("%s\n", token);
 	token = strtok(NULL, " ");
+	printf("%s\n", token);
 
 	FILE *readFile = fopen(token, "r");
 
