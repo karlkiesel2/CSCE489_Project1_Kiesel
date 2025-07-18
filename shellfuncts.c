@@ -127,7 +127,10 @@ Param: commandLine - Line of input given by user in format: update <name> <numbe
 */
 void list(char *commandLine) {
 
-	FILE *readFile = fopen("someName", "r");
+	char *token = strtok(commandLine, " ");
+	token = strtok(NULL, " ");
+
+	FILE *readFile = fopen(token, "r");
 
 	// If newFile does not exist, it will return a NULL pointer
 	if (readFile)
@@ -135,7 +138,8 @@ void list(char *commandLine) {
 		// if file exists, close it and move on
 		fclose(readFile);
 		// run the UNIX cat command to read contents of file
-		execl("/bin/cat", "cat", "someName", NULL);
+		printf("File contents:\n");
+		execl("/bin/cat", "cat", token, NULL);
 	}
 	else
 	{

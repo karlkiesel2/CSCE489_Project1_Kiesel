@@ -35,7 +35,7 @@ int main(int argv, const char *argc[])
 		// Grab line of text from user
 		fgets(commandLine, sizeof(commandLine), stdin);
 
-		printf("Command entered is %s\n", commandLine);
+		printf("Command entered is: %s\n", commandLine);
 
 		if (strcmp(commandLine, "halt\n") == 0)
 		{
@@ -102,7 +102,7 @@ int main(int argv, const char *argc[])
 			{
 				// Parent process
 				wait(NULL); // Wait for child to finish
-				printf("Child process completed.\n\n");
+				printf("\nChild process completed.\n\n");
 			}
 			else
 			{
@@ -136,7 +136,7 @@ int main(int argv, const char *argc[])
 		}
 		else
 		{
-			printf("Try again\n");
+			printf("Unrecognized command. Try again.\n");
 		}
 
 	} while (finished == false);
