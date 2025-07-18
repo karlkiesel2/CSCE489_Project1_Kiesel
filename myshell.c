@@ -75,7 +75,7 @@ int main(int argv, const char *argc[])
 			finished = true;
 		}
 		// check if first 7 chars of user input are "create "
-		else if ((strncmp(commandLine, "create ", 7) == 0) && (checkForTwoParams != NULL) && ((checkForThreeParams == NULL) || (background == true)))
+		else if ((strncmp(commandLine, "create ", 7) == 0) && (checkForTwoParamsToken != NULL) && ((checkForThreeParamsToken == NULL) || (background == true)))
 		{
 
 			// fork process
@@ -106,7 +106,7 @@ int main(int argv, const char *argc[])
 			}
 		}
 		// check if first 7 chars of user input are "update " and the fourth parameter is a non-NULL value
-		else if ((strncmp(commandLine, "update ", 7) == 0) && ((checkForFourParamsToken != NULL)) && (checkForFourParams[0] == '"'))
+		else if ((strncmp(commandLine, "update ", 7) == 0) && ((checkForFourParamsToken != NULL)) && (checkForFourParamsToken[0] == '"'))
 		{
 			// fork process
 			int pid = fork();
@@ -137,7 +137,7 @@ int main(int argv, const char *argc[])
 			}
 		}
 		// check if first 5 chars of user input are "list "
-		else if ((strncmp(commandLine, "list ", 5) == 0) && (checkForTwoParams != NULL) && ((checkForThreeParams == NULL) || (background == true)))
+		else if ((strncmp(commandLine, "list ", 5) == 0) && (checkForTwoParamsToken != NULL) && ((checkForThreeParamsToken == NULL) || (background == true)))
 		{
 			int pid = fork();
 			if (pid == 0)
