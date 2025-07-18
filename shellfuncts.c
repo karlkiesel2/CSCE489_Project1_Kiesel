@@ -8,7 +8,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
-//#include <unistd.h> // Will cause an error on Windows machines, uncomment to run on Linux
+#include <unistd.h> // Will cause an error on Windows machines, uncomment to run on Linux
 #include "shellfuncts.h"
 
 /*************************************************************************************
