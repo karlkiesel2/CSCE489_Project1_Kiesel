@@ -131,6 +131,7 @@ void list(char *commandLine) {
 	printf("%s\n", token);
 	token = strtok(NULL, " ");
 	printf("%s\n", token);
+	token = "someName";
 
 	FILE *readFile = fopen(token, "r");
 
