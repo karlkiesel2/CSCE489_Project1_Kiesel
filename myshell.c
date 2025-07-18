@@ -80,8 +80,8 @@ int main(int argv, const char *argc[])
 			else if (pid > 0)
 			{
 				// Parent process
-				wait(NULL); // Wait for child to finish
-				printf("Child process completed.\n\n");
+				//wait(NULL); // Wait for child to finish
+				//printf("Child process completed.\n\n");
 			}
 			else
 			{
