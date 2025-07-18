@@ -52,7 +52,7 @@ int main(int argv, const char *argc[])
 
 		// make copy of text entered by user. Then split by the space delimiter. Grab the second parameter
 		strcpy(checkForTwoParams, commandLine);
-		char *checkForTwoParamsToken = strtok(commandLine, " ");
+		char *checkForTwoParamsToken = strtok(checkForTwoParams, " ");
 		checkForTwoParamsToken = strtok(NULL, " ");
 
 		
