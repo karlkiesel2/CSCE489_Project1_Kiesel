@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdlib.h>
 #include "shellfuncts.h"
 
 /*************************************************************************************
@@ -93,6 +94,7 @@ Param: commandLine - Line of input given by user in format: update <name> <numbe
 void update(char *commandLine)
 {
 
+	printf("%s", commandLine);
 	char *token = strtok(commandLine, " ");
 	token = strtok(NULL, " ");
 
