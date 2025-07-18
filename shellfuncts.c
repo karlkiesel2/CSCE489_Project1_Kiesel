@@ -94,8 +94,11 @@ Param: commandLine - Line of input given by user in format: update <name> <numbe
 void update(char *commandLine)
 {
 
-	printf("%s", commandLine);
+	char lineCopy[100];
+	strcpy(lineCopy, commandLine);
+
 	char *token = strtok(commandLine, " ");
+
 	token = strtok(NULL, " ");
 
 	// First, check if the specified file exists
@@ -118,8 +121,8 @@ void update(char *commandLine)
 	token = strtok(NULL, " ");
 	//char *endptr;
 
-	char *textToken = strtok(token, "\"");
-	//textToken = strtok(NULL, "\"");
+	char *textToken = strtok(lineCopy, '"');
+	textToken = strtok(NULL, '"');
 
 	for (int i = 0; i < strtol(token, NULL, 10); i++)
 	{
