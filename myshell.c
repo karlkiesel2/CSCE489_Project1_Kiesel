@@ -38,7 +38,7 @@ int main(int argv, const char *argc[])
 
 		// These lines are used to check if the last two characters of a line are " &", indicating that the child process should run in the background
 		char lastChar = commandLine[strlen(commandLine) - 1];
-		char secondLastChar = commandLine[strlen(commandLine) - 1];
+		char secondLastChar = commandLine[strlen(commandLine) - 2];
 
 		printf("Command entered is: %s\n", commandLine);
 
