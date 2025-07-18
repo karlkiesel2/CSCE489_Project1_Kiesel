@@ -135,7 +135,7 @@ void list(char *commandLine) {
 		// if file exists, close it and move on
 		fclose(readFile);
 		// run the UNIX cat command to read contents of file
-		execl("/bin/cat", "cat", "someName");
+		execl("/bin/cat", "cat", "someName", NULL);
 	}
 	else
 	{
