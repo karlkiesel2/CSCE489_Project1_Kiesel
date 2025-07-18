@@ -64,7 +64,10 @@ Param: commandLine - Line of input given by user in format: create <name>
 void create(char *commandLine)
 {
 
-	FILE *newFile = fopen("someName", "r");
+	char *token = strtok(commandLine, " ");
+	token = strtok(NULL, " ");
+
+	FILE *newFile = fopen(token, "r");
 
 	// If newFile does not exist, it will return a NULL pointer
 	if (newFile)
@@ -75,7 +78,7 @@ void create(char *commandLine)
 	else
 	{
 		printf("New file created successfully!\n");
-		newFile = fopen("someName", "w");
+		newFile = fopen(token, "w");
 		fclose(newFile);
 	}
 
@@ -90,8 +93,11 @@ Param: commandLine - Line of input given by user in format: update <name> <numbe
 void update(char *commandLine)
 {
 
+	char *token = strtok(commandLine, " ");
+	token = strtok(NULL, " ");
+
 	// First, check if the specified file exists
-	FILE *testFile = fopen("someName", "r");
+	FILE *testFile = fopen(token, "r");
 	if (testFile)
 	{
 		// if file exists, close it and move on
@@ -106,11 +112,17 @@ void update(char *commandLine)
 	}
 
 	// since we know the file exists, open it in append mode
-	FILE *writeFile = fopen("someName", "a");
-	for (int i = 0; i < 5; i++)
+	FILE *writeFile = fopen(token, "a");
+	token = strtok(NULL, " ");
+	char *endptr;
+
+	char *textToken = strtok(commandLine, "\"");
+	textToken = strtok(commandLine, "\"");
+
+	for (int i = 0; i < strtol(token, endptr, 10); i++)
 	{
 		// write <text> to file each <number> of iterations
-		fprintf(writeFile, "This is a test\n");
+		fprintf(writeFile, "%s\n", textToken);
 		// update changes immediately
 		fflush(writeFile);
 	}
@@ -128,9 +140,7 @@ Param: commandLine - Line of input given by user in format: update <name> <numbe
 void list(char *commandLine) {
 
 	char *token = strtok(commandLine, " ");
-	printf("%s\n", token);
 	token = strtok(NULL, " ");
-	printf("%s\n", token);
 
 	FILE *readFile = fopen(token, "r");
 
