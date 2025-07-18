@@ -93,13 +93,13 @@ void update(char *commandLine)
 	token = strtok(NULL, " ");
 
 	// make sure each char in <number> is a numeric , and non-negative
-	if (token[i] == '-')
+	if (token[0] == '-')
 	{
 		printf("Number cannot be negative. Please try again");
 		exit(0);
 	}
 	
-	for (int i = 0; i < strlen(token); i++)
+	for (unsigned i = 0; i < strlen(token); i++)
 	{
 		if (!isdigit(token[i]))
 		{
