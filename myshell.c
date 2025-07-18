@@ -9,7 +9,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <sys/types.h>
-// #include <unistd.h> // Will cause an error on Windows machines, uncomment to run on Linux
+#include <unistd.h> // Will cause an error on Windows machines, uncomment to run on Linux
 #include "shellfuncts.h"
 
 int main(int argv, const char *argc[])
@@ -17,14 +17,10 @@ int main(int argv, const char *argc[])
 	(void)argv; // Make compile warnings go away - be sure to delete this line if you use the param
 	(void)argc; // Make compile warnings go away - be sure to delete this line if you use the param
 
-	// If they just ran myshell, say Hello World--if they included a parameter, speak Australian
-	// if (argv == 1)
-	//	hello(1);
-	// else
-	//	hello(0);
+	// used to check if the shell should be terminated. Start as false
 	bool finished = false;
 	// create a string to hold the entered command
-	char commandLine[100];
+	char commandLine[100], checkForTwoParams[100], checkForFourParams[100];
 	// iterate through do-while loop until the 'halt' command is entered
 	do
 	{
@@ -34,18 +30,35 @@ int main(int argv, const char *argc[])
 		printf("Enter a command to run:\n");
 		// Grab line of text from user
 		fgets(commandLine, sizeof(commandLine), stdin);
+		// remove the trailing newline character
 		commandLine[strcspn(commandLine, "\n")] = 0;
 
 		// These lines are used to check if the last two characters of a line are " &", indicating that the child process should run in the background
 		char lastChar = commandLine[strlen(commandLine) - 1];
 		char secondLastChar = commandLine[strlen(commandLine) - 2];
 
+		// show user the command that they entered
 		printf("Command entered is: %s\n", commandLine);
 
+		// make copy of text entered by user. Then split by the space delimiter. For commands where we take two parameters, check to make sure the second token does not hold a NULL value
+		strcpy(checkForTwoParams, commandLine);
+		char *checkForTwoParamsToken = strtok(checkForTwoParams, " ");
+		checkForTwoParamsToken = strtok(NULL, " ");
+
+		// make copy of text entered by user. Then split by the space delimiter. For commands where we take four parameters, check to make sure the fourth token does not hold a NULL value
+		strcpy(checkForFourParams, commandLine);
+		char *checkForFourParamsToken = strtok(checkForFourParams, " ");
+		for (int i = 0; i < 3; i++)
+		{
+			checkForFourParamsToken = strtok(NULL, " ");
+		}
+
+		// if command is 'halt', set finished to true, thus ending the program
 		if (strcmp(commandLine, "halt") == 0)
 		{
 			finished = true;
 		}
+		// check if first 7 chars of user input are "create "
 		else if (strncmp(commandLine, "create ", 7) == 0)
 		{
 
@@ -70,6 +83,7 @@ int main(int argv, const char *argc[])
 				perror("fork failed");
 			}
 		}
+		// check if first 7 lines of user input are "update "
 		else if (strncmp(commandLine, "update ", 7) == 0)
 		{
 			// fork process
@@ -81,14 +95,15 @@ int main(int argv, const char *argc[])
 				update(commandLine);
 				perror("exec failed");
 			}
-			// This handles the background process case
+			// This handles the background process case for parent
 			else if ((pid > 0) && (lastChar == '&') && (secondLastChar == ' '))
 			{
-				printf("In the background!");
+				printf("In the background!\n");
 				wait(NULL); // Wait for child to finish
 				printf("Child process completed.\n\n");
 				// background stuff
 			}
+			// Foreground process case for parent
 			else if (pid > 0)
 			{
 				// Parent process
@@ -101,6 +116,7 @@ int main(int argv, const char *argc[])
 				perror("fork failed");
 			}
 		}
+		// check if first 5 lines of user input are "list "
 		else if (strncmp(commandLine, "list ", 5) == 0)
 		{
 			int pid = fork();
@@ -123,7 +139,7 @@ int main(int argv, const char *argc[])
 				perror("fork failed");
 			}
 		}
-		// condition for 'dir' command
+		// check if value in command line is exactly "dir"
 		else if (strcmp(commandLine, "dir") == 0)
 		{
 			// fork process
@@ -147,11 +163,14 @@ int main(int argv, const char *argc[])
 				perror("fork failed");
 			}
 		}
+		// None of the command requirements were met
 		else
 		{
+			// prompt the user to try again
 			printf("Unrecognized command. Try again.\n");
 		}
 
+		// Continue looping until halt is entered
 	} while (finished == false);
 
 	return 0;
