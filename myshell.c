@@ -150,7 +150,7 @@ int main(int argv, const char *argc[])
 			}
 		}
 		// check if value in command line is exactly "dir" or "dir &"
-		else if ((strcmp(commandLine, "dir") == 0) || (strcmp(commandLine, "dir &")))
+		else if ((strcmp(commandLine, "dir") == 0) || (strcmp(commandLine, "dir &") == 0))
 		{
 			// fork process
 			int pid = fork();
