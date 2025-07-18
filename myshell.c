@@ -49,7 +49,7 @@ int main(int argv, const char *argc[])
 
 		// make copy of text entered by user. Then split by the space delimiter. Grab the second parameter
 		strcpy(checkForTwoParams, commandLine);
-		char *checkForTwoParamsToken = strtok(checkForTwoParams, " ");
+		char *checkForTwoParamsToken = strtok(commandLine, " ");
 		checkForTwoParamsToken = strtok(NULL, " ");
 
 		
@@ -96,7 +96,7 @@ int main(int argv, const char *argc[])
 			else if (pid > 0)
 			{
 				// Parent process
-				waitpid(pid, 0, NULL); // waitpid for child to finish
+				waitpid(pid, 0, 0); // waitpid for child to finish
 				printf("Child process completed.\n\n");
 			}
 			else
@@ -127,7 +127,7 @@ int main(int argv, const char *argc[])
 			else if (pid > 0)
 			{
 				// Parent process
-				waitpid(pid, 0, NULL); // waitpid for child to finish
+				waitpid(pid, 0, 0); // waitpid for child to finish
 				printf("Child process completed.\n\n");
 			}
 			else
@@ -156,7 +156,7 @@ int main(int argv, const char *argc[])
 			else if (pid > 0)
 			{
 				// Parent process
-				waitpid(pid, 0, NULL); // waitpid for child to finish
+				waitpid(pid, 0, 0); // waitpid for child to finish
 				printf("\nChild process completed.\n\n");
 			}
 			else
@@ -186,7 +186,7 @@ int main(int argv, const char *argc[])
 			else if (pid > 0)
 			{
 				// Parent process
-				waitpid(pid, 0, NULL); // waitpid for child to finish
+				waitpid(pid, 0, 0); // waitpid for child to finish
 				printf("Child process completed.\n\n");
 			}
 			else
