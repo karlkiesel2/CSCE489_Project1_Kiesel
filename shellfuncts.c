@@ -117,7 +117,7 @@ void update(char *commandLine)
 	char *endptr;
 
 	char *textToken = strtok(commandLine, "\"");
-	textToken = strtok(NULL, "\"");
+	//textToken = strtok(NULL, "\"");
 
 	for (int i = 0; i < strtol(token, endptr, 10); i++)
 	{
