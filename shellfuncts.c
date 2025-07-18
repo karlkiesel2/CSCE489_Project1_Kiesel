@@ -95,7 +95,7 @@ void update(char *commandLine)
 	// make sure each char in <number> is a numeric , and non-negative
 	if (token[0] == '-')
 	{
-		printf("Number cannot be negative. Please try again");
+		printf("Number cannot be negative. Please try again. No changes made.\n");
 		exit(0);
 	}
 	
@@ -103,7 +103,7 @@ void update(char *commandLine)
 	{
 		if (!isdigit(token[i]))
 		{
-			printf("Non-numeric entry detected for <number>. Please try again");
+			printf("Non-numeric entry detected for <number>. Please try again. No changes made.\n");
 			exit(0);
 		}
 		
