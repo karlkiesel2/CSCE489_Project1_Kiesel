@@ -9,8 +9,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <sys/types.h>
-#include <sys/wait.h> // Will cause an error on Windows machines, uncomment to run on Linux
-#include <unistd.h> // Will cause an error on Windows machines, uncomment to run on Linux
+//#include <sys/waitpid.h> // Will cause an error on Windows machines, uncomment to run on Linux
+//#include <unistd.h> // Will cause an error on Windows machines, uncomment to run on Linux
 #include "shellfuncts.h"
 
 int main(int argv, const char *argc[])
@@ -90,7 +90,7 @@ int main(int argv, const char *argc[])
 			else if (pid > 0)
 			{
 				// Parent process
-				wait(NULL); // Wait for child to finish
+				waitpid(pid, 0, NULL); // waitpid for child to finish
 				printf("Child process completed.\n\n");
 			}
 			else
@@ -115,7 +115,7 @@ int main(int argv, const char *argc[])
 			else if ((pid > 0) && (background == true))
 			{
 				printf("In the background!\n");
-				wait(NULL); // Wait for child to finish
+				// waitpid(pid, 0, NULL); // waitpid for child to finish
 				printf("Child process completed.\n\n");
 				// background stuff
 			}
@@ -123,7 +123,7 @@ int main(int argv, const char *argc[])
 			else if (pid > 0)
 			{
 				// Parent process
-				wait(NULL); // Wait for child to finish
+				waitpid(pid, 0, NULL); // waitpid for child to finish
 				printf("Child process completed.\n\n");
 			}
 			else
@@ -146,7 +146,7 @@ int main(int argv, const char *argc[])
 			else if (pid > 0)
 			{
 				// Parent process
-				wait(NULL); // Wait for child to finish
+				waitpid(pid, 0, NULL); // waitpid for child to finish
 				printf("\nChild process completed.\n\n");
 			}
 			else
@@ -170,7 +170,7 @@ int main(int argv, const char *argc[])
 			else if (pid > 0)
 			{
 				// Parent process
-				wait(NULL); // Wait for child to finish
+				waitpid(pid, 0, NULL); // waitpid for child to finish
 				printf("Child process completed.\n\n");
 			}
 			else
