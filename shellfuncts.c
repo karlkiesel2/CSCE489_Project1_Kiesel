@@ -69,12 +69,12 @@ void create(char *commandLine)
 	// If newFile does not exist, it will return a NULL pointer
 	if (newFile)
 	{
-		printf("File already exists!\n");
+		printf("File already exists! Ending process...\n");
 		fclose(newFile);
 	}
 	else
 	{
-		printf("File does not exist.\n");
+		printf("New file created successfully!\n");
 		newFile = fopen("someName", "w");
 		fclose(newFile);
 	}
@@ -100,7 +100,7 @@ void update(char *commandLine)
 	else
 	{
 		// if file does not exist, stop process and return to parent
-		printf("File does not exist, use 'create' command to make it.\n");
+		printf("File does not exist, use 'create' command to make it. Ending process...\n");
 		fclose(testFile);
 		exit(0);
 	}
@@ -135,12 +135,12 @@ void list(char *commandLine) {
 		// if file exists, close it and move on
 		fclose(readFile);
 		// run the UNIX cat command to read contents of file
-		execl("/bin/cat", "someName", NULL);
+		execl("/bin/cat", "cat", "someName");
 	}
 	else
 	{
 		// if file does not exist, stop process and return to parent
-		printf("File does not exist, use 'create' command to make it.\n");
+		printf("File does not exist, use 'create' command to make it. Ending process...\n");
 		fclose(readFile);
 		exit(0);
 	}
